@@ -21,8 +21,8 @@ function kurangiSaldo() {
 
   let msgs = [
     "",
-    "Masukkan jumlah yang valid!",
-    "Saldo Anda tidak cukup!"
+    "Saldo Anda tidak cukup!",
+    "Masukkan jumlah yang valid!"
   ];
   let idx = insufficientSaldo + 2 * invalidJumlah;
   let msgToShow = msgs[idx];
