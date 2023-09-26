@@ -10,7 +10,6 @@ class SaldoManager {
     this.showSaldo = document.getElementById("show-saldo");
 
     this.updateSaldo();
-
     this.btnAdd.addEventListener("click", () => this.tambahSaldo());
     this.btnSub.addEventListener("click", () => this.kurangiSaldo());
   }
@@ -45,7 +44,9 @@ class SaldoManager {
   }
 
   updateSaldo() {
-    this.showSaldo.innerHTML = this.saldo;
+
+    // this.showSaldo.innerHTML = this.saldo.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "_");
+    this.showSaldo.innerHTML = this.saldo.toString();
     localStorage.setItem("saldo", this.saldo);
   }
 }
