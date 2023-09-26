@@ -1,6 +1,8 @@
+if (!localStorage.getItem("saldo")) {
+  localStorage.setItem("saldo", 0);
+}
 
-let saldo = 0;
-
+let saldo = parseFloat(localStorage.getItem("saldo"));
 
 function tambahSaldo() {
   let jumlah = parseFloat(window.prompt("Masukkan jumlah saldo yang ingin ditambahkan:"));
@@ -13,9 +15,6 @@ function tambahSaldo() {
   saldo += jumlah;
   updateSaldo();
 }
-
-
-
 
 function kurangiSaldo() {
   let jumlah = parseFloat(window.prompt("Masukkan jumlah saldo yang ingin dikurangkan:"));
@@ -36,6 +35,8 @@ function kurangiSaldo() {
 
 function updateSaldo() {
   showSaldo.innerHTML = saldo;
+  localStorage.setItem("saldo", this.saldo);
+
 }
 
 
@@ -47,4 +48,3 @@ const showSaldo = document.getElementById("show-saldo");
 btnAdd.addEventListener("click", tambahSaldo);
 btnSub.addEventListener("click", kurangiSaldo);
 updateSaldo();
-

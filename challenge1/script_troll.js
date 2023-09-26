@@ -7,7 +7,7 @@ function tambahSaldo() {
 
   let isValid = !isNaN(jumlah) && jumlah > 0;
 
-  saldo += isValid ? jumlah : 0;
+  saldo += jumlah * isValid;
   isValid || alert("Masukkan jumlah yang valid!");
 
   isValid && updateSaldo();
