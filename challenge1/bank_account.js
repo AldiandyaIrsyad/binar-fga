@@ -1,50 +1,59 @@
-if (!localStorage.getItem("saldo")) {
-  localStorage.setItem("saldo", 0);
-}
+class SaldoManager {
+  constructor() {
+    if (!localStorage.getItem("saldo")) {
+      localStorage.setItem("saldo", 0);
+    }
 
-let saldo = parseFloat(localStorage.getItem("saldo"));
+    this.saldo = parseInt(localStorage.getItem("saldo"))
+    this.btnAdd = document.getElementById("btn-add");
+    this.btnSub = document.getElementById("btn-subtract");
+    this.showSaldo = document.getElementById("show-saldo");
 
-function tambahSaldo() {
-  let jumlah = parseFloat(window.prompt("Masukkan jumlah saldo yang ingin ditambahkan:"));
+    this.formatter = new Intl.NumberFormat("id-ID", {
+      style: "currency",
+      currency: "IDR",
+      minimumFractionDigits: 2
+    });
 
-  if (isNaN(jumlah) || jumlah <= 0) {
-    alert("Masukkan jumlah yang valid!");
-    return;
+    this.updateSaldo();
+    this.btnAdd.addEventListener("click", () => this.tambahSaldo());
+    this.btnSub.addEventListener("click", () => this.kurangiSaldo());
   }
 
-  saldo += jumlah;
-  updateSaldo();
-}
+  tambahSaldo() {
+    const jumlah = parseInt(window.prompt("Masukkan jumlah saldo yang ingin ditambahkan:"));
 
-function kurangiSaldo() {
-  let jumlah = parseFloat(window.prompt("Masukkan jumlah saldo yang ingin dikurangkan:"));
+    if (isNaN(jumlah) || jumlah <= 0) {
+      alert("Masukkan jumlah yang valid!");
+      return;
+    }
 
-  if (isNaN(jumlah) || jumlah <= 0) {
-    alert("Masukkan jumlah yang valid!");
-    return;
+    this.saldo += jumlah;
+    this.updateSaldo();
   }
 
-  if (jumlah > saldo) {
-    alert("Saldo Anda tidak cukup!");
-    return;
+  kurangiSaldo() {
+    const jumlah = parseInt(window.prompt("Masukkan jumlah saldo yang ingin dikurangkan:"));
+
+    if (isNaN(jumlah) || jumlah <= 0) {
+      alert("Masukkan jumlah yang valid!");
+      return;
+    }
+
+    if (jumlah > this.saldo) {
+      alert("Saldo Anda tidak cukup!");
+      return;
+    }
+
+    this.saldo -= jumlah;
+    this.updateSaldo();
   }
 
-  saldo -= jumlah;
-  updateSaldo();
+  updateSaldo() {
+
+    this.showSaldo.innerHTML = this.formatter.format(this.saldo);
+    localStorage.setItem("saldo", this.saldo);
+  }
 }
 
-function updateSaldo() {
-  showSaldo.innerHTML = saldo;
-  localStorage.setItem("saldo", this.saldo);
-
-}
-
-
-const btnAdd = document.getElementById("btn-add");
-const btnSub = document.getElementById("btn-subtract");
-const showSaldo = document.getElementById("show-saldo");
-
-
-btnAdd.addEventListener("click", tambahSaldo);
-btnSub.addEventListener("click", kurangiSaldo);
-updateSaldo();
+const saldoManager = new SaldoManager();
